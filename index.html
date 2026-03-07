@@ -500,24 +500,51 @@
         const d1 = startDate.replaceAll("-", "");
         const d2 = endDate.replaceAll("-", "");
         const url = `https://stooq.com/q/d/l/?s=${stooqSymbol}&d1=${d1}&d2=${d2}&i=d`;
-        const candidates = [`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, url];
+        const candidates = [
+          { name: "allorigins", url: `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}` },
+          { name: "corsproxy", url: `https://corsproxy.io/?${encodeURIComponent(url)}` },
+          { name: "codetabs", url: `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}` },
+          // r.jina.ai can fetch raw http content and often bypasses browser CORS limitations.
+          { name: "jina-ai", url: `https://r.jina.ai/http://stooq.com/q/d/l/?s=${stooqSymbol}&d1=${d1}&d2=${d2}&i=d` },
+          { name: "direct", url },
+        ];
+
+        const parseCsvBars = (text) => {
+          // Some proxy responses may prepend text/headers; keep only csv-like lines.
+          const lines = text
+            .split("\n")
+            .map((l) => l.trim())
+            .filter(Boolean)
+            .filter((l) => /^\d{4}-\d{2}-\d{2},/.test(l) || /^Date,Open,High,Low,Close,Volume$/i.test(l));
+
+          const rows = lines.filter((l) => /^\d{4}-\d{2}-\d{2},/.test(l));
+          const data = rows
+            .map((r) => {
+              const [date, open, high, low, close, volume] = r.split(",");
+              return { date, open: +open, high: +high, low: +low, close: +close, volume: +volume };
+            })
+            .filter((r) => Number.isFinite(r.close));
+          return data;
+        };
 
         let lastErr = "";
-        for (const u of candidates) {
+        for (const c of candidates) {
           try {
-            const res = await fetch(u);
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 10000);
+            let res;
+            try {
+              res = await fetch(c.url, { signal: controller.signal });
+            } finally {
+              clearTimeout(timeout);
+            }
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const csv = await res.text();
-            const data = csv.trim().split("\n").slice(1).filter(Boolean)
-              .map(r => {
-                const [date, open, high, low, close, volume] = r.split(",");
-                return { date, open: +open, high: +high, low: +low, close: +close, volume: +volume };
-              })
-              .filter(r => Number.isFinite(r.close));
+            const data = parseCsvBars(csv);
             if (!data.length) throw new Error("No bars returned");
             return data;
           } catch (e) {
-            lastErr = e.message;
+            lastErr = `${c.name}: ${e.message}`;
           }
         }
         throw new Error(`Could not fetch data for ${symbol}. Last error: ${lastErr}`);

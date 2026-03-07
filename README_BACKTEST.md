@@ -12,6 +12,7 @@ python3 -m http.server 8000
 ## Features included
 
 - Data fetching without manual CSV uploads
+- Multi-endpoint fetch fallback (several proxy routes + direct attempt) for better reliability
 - Ticker autocomplete suggestions for common US symbols
 - Quick timeframe buttons: `1M`, `3M`, `6M`, `1Y`, `3Y`, `5Y`
 - Strategy options:
