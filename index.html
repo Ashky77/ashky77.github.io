@@ -1,211 +1,1122 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ashky Links</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-      <style>
-                * {
-                              margin: 0;
-                              padding: 0;
-                              box-sizing: border-box;
-                }
-
-                body {
-                              font-family: 'Quicksand', sans-serif;
-                              min-height: 100vh;
-                              display: flex;
-                              justify-content: center;
-                              padding: 20px;
-                              color: #ffffff;
-                              position: relative;
-                }
-
-                .background-image {
-                              position: fixed;
-                              top: 0;
-                              left: 0;
-                              width: 100%;
-                              height: 100%;
-                              z-index: -2;
-                              background: url('background.jpg') center center / cover no-repeat;
-                }
-
-                .background-overlay {
-                              position: fixed;
-                              top: 0;
-                              left: 0;
-                              width: 100%;
-                              height: 100%;
-                              z-index: -1;
-                              background: rgba(0, 0, 0, 0.7);
-                }
-
-                .container {
-                              max-width: 500px;
-                              width: 100%;
-                              text-align: center;
-                              padding: 30px 20px;
-                }
-
-                .profile-section {
-                              margin-bottom: 25px;
-                }
-
-                .profile-pic {
-                              width: 150px;
-                              height: 150px;
-                              border-radius: 50%;
-                              border: 4px solid #c8e600;
-                              object-fit: cover;
-                              margin-bottom: 15px;
-                              box-shadow: 0 0 30px rgba(200, 230, 0, 0.3);
-                              transition: transform 0.3s ease;
-                              background: #2a2a2a;
-                }
-
-                .profile-pic:hover {
-                              transform: scale(1.05);
-                }
-
-                h1 {
-                              font-size: 2em;
-                              font-weight: 700;
-                              color: #c8e600;
-                              margin-bottom: 5px;
-                              text-shadow: 0 0 20px rgba(200, 230, 0, 0.5);
-                }
-
-                .subtitle {
-                              color: #ccc;
-                              font-size: 1em;
-                              margin-bottom: 10px;
-                }
-
-                .bio {
-                              color: #ddd;
-                              font-size: 0.95em;
-                              line-height: 1.5;
-                              margin-bottom: 25px;
-                }
-
-                .links {
-                              display: flex;
-                              flex-direction: column;
-                              gap: 12px;
-                }
-
-                .link-btn {
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              gap: 12px;
-                              padding: 15px 20px;
-                              background: rgba(50, 50, 50, 0.8);
-                              border: 2px solid #444;
-                              border-radius: 50px;
-                              color: #fff;
-                              text-decoration: none;
-                              font-weight: 600;
-                              font-size: 1em;
-                              transition: all 0.3s ease;
-                              backdrop-filter: blur(5px);
-                }
-
-                .link-btn:hover {
-                              background: linear-gradient(135deg, #c8e600 0%, #a0b800 100%);
-                              border-color: #c8e600;
-                              color: #1a1a1a;
-                              transform: translateY(-3px);
-                              box-shadow: 0 10px 30px rgba(200, 230, 0, 0.3);
-                }
-
-                .link-btn i {
-                              font-size: 1.3em;
-                }
-
-                .link-btn.instagram:hover {
-                              background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-                              border-color: #dc2743;
-                              color: #fff;
-                }
-
-                .link-btn.twitter:hover {
-                              background: #000;
-                              border-color: #fff;
-                              color: #fff;
-                }
-
-                .link-btn.tiktok:hover {
-                              background: linear-gradient(135deg, #00f2ea, #ff0050);
-                              border-color: #00f2ea;
-                              color: #fff;
-                }
-
-                .link-btn.threads:hover {
-                              background: #000;
-                              border-color: #fff;
-                              color: #fff;
-                }
-
-                .link-btn.xiaohongshu:hover {
-                              background: #ff2442;
-                              border-color: #ff2442;
-                              color: #fff;
-                }
-
-                @media (max-width: 400px) {
-                              h1 { font-size: 1.6em; }
-                              .profile-pic { width: 120px; height: 120px; }
-                              .link-btn { padding: 12px 15px; font-size: 0.9em; }
-                }
-            </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Stock Backtester</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --card: #121a33;
+        --card-2: #1a2448;
+        --text: #e6ecff;
+        --muted: #a3b3e6;
+        --good: #22c55e;
+        --bad: #ef4444;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: radial-gradient(circle at top right, #1b2d6b, var(--bg) 45%);
+        color: var(--text);
+      }
+      .app { max-width: 1240px; margin: 0 auto; padding: 20px; }
+      .card {
+        background: linear-gradient(180deg, var(--card), var(--card-2));
+        border: 1px solid #31407a;
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      h1 { margin: 0 0 4px; font-size: 1.5rem; }
+      h3 { margin: 0 0 10px; }
+      p { color: var(--muted); margin: 4px 0 12px; }
+      .controls, .optimizer-grid { display: grid; grid-template-columns: repeat(6, minmax(120px, 1fr)); gap: 10px; }
+      .controls label, .optimizer-grid label {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.82rem;
+        color: var(--muted);
+      }
+      input, select, button {
+        border-radius: 8px;
+        border: 1px solid #425296;
+        background: #0f1731;
+        color: var(--text);
+        padding: 9px 10px;
+      }
+      input:focus, select:focus, button:focus { outline: 2px solid #6a88ff; outline-offset: 1px; }
+      .check { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--muted); margin-top: 6px; }
+      .check input { width: 16px; height: 16px; }
+      button {
+        background: linear-gradient(180deg, #2b4bc5, #1f3a9a);
+        border: 1px solid #5f7bf5;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button[disabled] { opacity: 0.6; cursor: not-allowed; }
+      button.secondary { background: #111b3f; border: 1px solid #5066bd; }
+      .range-buttons, .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+      .range-btn { padding: 6px 10px; border-radius: 999px; border: 1px solid #5066bd; background: #111b3f; color: var(--text); font-size: 0.8rem; }
+      .range-btn.active { background: #2a49c0; border-color: #86a0ff; }
+      .row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+      .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .stat { border: 1px solid #2e3b72; background: #0f1731; border-radius: 10px; padding: 10px; }
+      .stat .k { color: var(--muted); font-size: 0.8rem; }
+      .stat .v { font-size: 1.1rem; font-weight: 700; }
+      .chart-legend { font-size: 0.8rem; color: var(--muted); display: flex; gap: 14px; margin-bottom: 8px; }
+      .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+      #equityChart { width: 100%; height: 330px; border-radius: 10px; border: 1px solid #2e3b72; background: #0b122a; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+      th, td { border-bottom: 1px solid #283567; padding: 8px; text-align: left; }
+      .hint { font-size: 0.82rem; color: var(--muted); }
+      .good { color: var(--good); }
+      .bad { color: var(--bad); }
+      .hidden { display: none !important; }
+      .optimizer-result { margin-top: 10px; font-size: 0.86rem; color: var(--muted); }
+      .mini-note { font-size: 0.82rem; color: var(--muted); margin-top: 8px; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+      @media (max-width: 1024px) {
+        .controls, .optimizer-grid { grid-template-columns: repeat(2, 1fr); }
+        .row { grid-template-columns: 1fr; }
+      }
+    </style>
   </head>
   <body>
-        <div class="background-image"></div>
-        <div class="background-overlay"></div>
+    <div class="app">
+      <div class="card">
+        <h1>Stock Backtester + Full Variable Optimizer</h1>
+        <p>Customize a broad set of strategy, risk, execution, and filter variables, then brute-force combinations.</p>
 
-        <div class="container">
-                  <div class="profile-section">
-                                <img src="Icon.png" alt="Ashky Profile" class="profile-pic">
-                                <h1>Ashky</h1>
-                              <p class="subtitle">Ricky & Asher</p>
-                              <p class="bio">Hi! Feel free to take a look around here! UwU</p>
-                  </div>
-                
-                <div class="links">
-                            <a href="https://www.instagram.com/ashky_uwu" target="_blank" class="link-btn instagram">
-                                            <i class="fab fa-instagram"></i>
-                                            Instagram
-                            </a>
-                            
-                            <a href="https://www.threads.com/@ashky_uwu" target="_blank" class="link-btn threads">
-                                            <i class="fab fa-threads"></i>
-                                            Threads
-                            </a>
-                            
-                            <a href="https://x.com/Asher_Panth" target="_blank" class="link-btn twitter">
-                                            <i class="fab fa-x-twitter"></i>
-                                            Twitter
-                            </a>
-                            
-                            <a href="https://www.tiktok.com/@ashky7705" target="_blank" class="link-btn tiktok">
-                                            <i class="fab fa-tiktok"></i>
-                                            TikTok
-                            </a>
-                            
-                            <a href="https://xhslink.com/m/1hzA6BfiLRh" target="_blank" class="link-btn xiaohongshu">
-                                            <i class="fas fa-book-open"></i>
-                                            小红书 Xiaohongshu
-                            </a>
-                </div>
+        <div class="controls">
+          <label>
+            Ticker (US)
+            <input id="symbol" value="AAPL" list="tickerSuggestions" placeholder="e.g. AAPL" />
+            <datalist id="tickerSuggestions">
+              <option value="AAPL"></option><option value="MSFT"></option><option value="NVDA"></option>
+              <option value="AMZN"></option><option value="GOOGL"></option><option value="META"></option>
+              <option value="TSLA"></option><option value="NFLX"></option><option value="AMD"></option>
+              <option value="SPY"></option><option value="QQQ"></option>
+            </datalist>
+          </label>
+          <label>Start Date<input id="startDate" type="date" /></label>
+          <label>End Date<input id="endDate" type="date" /></label>
+          <label>
+            Strategy
+            <select id="strategyType">
+              <option value="sma">SMA Cross</option>
+              <option value="breakout">Breakout</option>
+              <option value="rsi">RSI Mean Reversion</option>
+            </select>
+          </label>
+          <label>
+            Direction
+            <select id="directionMode">
+              <option value="long_only">Long Only</option>
+              <option value="long_short">Long + Short</option>
+            </select>
+          </label>
+          <label>Initial Capital<input id="initialCapital" type="number" value="10000" min="100" step="100" /></label>
+
+          <label>Fast / Lookback<input id="fast" type="number" value="20" min="2" /></label>
+          <label id="slowWrap">Slow Window<input id="slow" type="number" value="50" min="5" /></label>
+          <label id="rsiLookbackWrap">RSI Lookback<input id="rsiLookback" type="number" value="14" min="2" /></label>
+          <label id="rsiBuyWrap">RSI Buy Threshold<input id="rsiBuy" type="number" value="30" min="1" max="99" /></label>
+          <label id="rsiSellWrap">RSI Sell Threshold<input id="rsiSell" type="number" value="70" min="1" max="99" /></label>
+          <label>Leverage<input id="leverage" type="number" value="1" min="0.1" max="10" step="0.1" /></label>
+
+          <label>Position Size %<input id="positionSizePct" type="number" value="100" min="1" max="300" step="1" /></label>
+          <label>Fee (bps)<input id="feeBps" type="number" value="1" min="0" step="0.1" /></label>
+          <label>Slippage (bps)<input id="slippageBps" type="number" value="2" min="0" step="0.1" /></label>
+          <label>Stop Loss %<input id="stopLossPct" type="number" value="8" min="0" step="0.1" /></label>
+          <label>Take Profit %<input id="takeProfitPct" type="number" value="15" min="0" step="0.1" /></label>
+          <label>Trailing Stop %<input id="trailingStopPct" type="number" value="0" min="0" step="0.1" /></label>
+
+          <label>Min Hold Bars<input id="minHoldBars" type="number" value="0" min="0" step="1" /></label>
+          <label>Max Hold Bars (0=off)<input id="maxHoldBars" type="number" value="0" min="0" step="1" /></label>
+          <label>Cooldown Bars<input id="cooldownBars" type="number" value="0" min="0" step="1" /></label>
+          <label>Trend MA (filter)<input id="trendMa" type="number" value="0" min="0" step="1" /></label>
+          <label>Volume MA (filter)<input id="volumeMa" type="number" value="0" min="0" step="1" /></label>
+          <label>Min Vol Ratio<input id="volumeRatio" type="number" value="1" min="0.1" step="0.1" /></label>
+
+          <label style="align-self:end;"><button id="runBtn">Run Backtest</button></label>
         </div>
+
+        <div class="range-buttons">
+          <button class="range-btn" data-range="1M">1M</button><button class="range-btn" data-range="3M">3M</button>
+          <button class="range-btn" data-range="6M">6M</button><button class="range-btn active" data-range="1Y">1Y</button>
+          <button class="range-btn" data-range="3Y">3Y</button><button class="range-btn" data-range="5Y">5Y</button>
+        </div>
+
+        <div class="toolbar">
+          <button class="secondary" id="exportTradesBtn" disabled>Export Trades CSV</button>
+          <button class="secondary" id="exportEquityBtn" disabled>Export Equity CSV</button>
+        </div>
+
+        <div id="status" class="hint" style="margin-top:10px;"></div>
+      </div>
+
+      <div class="card">
+        <h3>Optimizer (wide variable coverage)</h3>
+        <div class="optimizer-grid">
+          <label>Scope
+            <select id="optScope">
+              <option value="current">Current Strategy Only</option>
+              <option value="all">All Strategies (SMA + Breakout + RSI)</option>
+            </select>
+          </label>
+          <label>Score By
+            <select id="optMetric">
+              <option value="outperformance">Outperformance</option>
+              <option value="totalReturn">Total Return</option>
+              <option value="sharpe">Sharpe</option>
+            </select>
+          </label>
+
+          <label>Fast Min<input id="optFastMin" type="number" value="5" min="2" /></label>
+          <label>Fast Max<input id="optFastMax" type="number" value="40" min="2" /></label>
+          <label>Fast Step<input id="optFastStep" type="number" value="5" min="1" /></label>
+          <label>Slow Min<input id="optSlowMin" type="number" value="20" min="5" /></label>
+          <label>Slow Max<input id="optSlowMax" type="number" value="120" min="5" /></label>
+          <label>Slow Step<input id="optSlowStep" type="number" value="10" min="1" /></label>
+
+          <label>RSI Buy Min<input id="optRsiBuyMin" type="number" value="20" min="1" /></label>
+          <label>RSI Buy Max<input id="optRsiBuyMax" type="number" value="40" min="1" /></label>
+          <label>RSI Buy Step<input id="optRsiBuyStep" type="number" value="5" min="1" /></label>
+          <label>RSI Sell Min<input id="optRsiSellMin" type="number" value="60" min="1" /></label>
+          <label>RSI Sell Max<input id="optRsiSellMax" type="number" value="85" min="1" /></label>
+          <label>RSI Sell Step<input id="optRsiSellStep" type="number" value="5" min="1" /></label>
+
+          <label>SL Min %<input id="optSlMin" type="number" value="0" min="0" step="0.5" /></label>
+          <label>SL Max %<input id="optSlMax" type="number" value="12" min="0" step="0.5" /></label>
+          <label>SL Step %<input id="optSlStep" type="number" value="4" min="0.1" step="0.1" /></label>
+          <label>TP Min %<input id="optTpMin" type="number" value="0" min="0" step="0.5" /></label>
+          <label>TP Max %<input id="optTpMax" type="number" value="30" min="0" step="0.5" /></label>
+          <label>TP Step %<input id="optTpStep" type="number" value="10" min="0.1" step="0.1" /></label>
+
+          <label>Trail Min %<input id="optTrailMin" type="number" value="0" min="0" step="0.5" /></label>
+          <label>Trail Max %<input id="optTrailMax" type="number" value="10" min="0" step="0.5" /></label>
+          <label>Trail Step %<input id="optTrailStep" type="number" value="5" min="0.1" step="0.1" /></label>
+          <label>Pos Size Min %<input id="optPosSizeMin" type="number" value="50" min="1" /></label>
+          <label>Pos Size Max %<input id="optPosSizeMax" type="number" value="150" min="1" /></label>
+          <label>Pos Size Step %<input id="optPosSizeStep" type="number" value="50" min="1" /></label>
+
+          <label>Leverage Min<input id="optLevMin" type="number" value="1" min="0.1" step="0.1" /></label>
+          <label>Leverage Max<input id="optLevMax" type="number" value="2" min="0.1" step="0.1" /></label>
+          <label>Leverage Step<input id="optLevStep" type="number" value="0.5" min="0.1" step="0.1" /></label>
+          <label>Cooldown Min<input id="optCooldownMin" type="number" value="0" min="0" step="1" /></label>
+          <label>Cooldown Max<input id="optCooldownMax" type="number" value="3" min="0" step="1" /></label>
+          <label>Cooldown Step<input id="optCooldownStep" type="number" value="1" min="1" step="1" /></label>
+
+          <label>Max Hold Min<input id="optMaxHoldMin" type="number" value="0" min="0" step="1" /></label>
+          <label>Max Hold Max<input id="optMaxHoldMax" type="number" value="20" min="0" step="1" /></label>
+          <label>Max Hold Step<input id="optMaxHoldStep" type="number" value="10" min="1" step="1" /></label>
+          <label>Max Combo Cap<input id="optCap" type="number" value="6000" min="100" step="100" /></label>
+          <label style="align-self:end;"><button id="optimizeBtn">Find Best Combo</button></label>
+        </div>
+
+        <div class="toolbar">
+          <button class="secondary" id="applyBestBtn" disabled>Apply Best To Form</button>
+          <button class="secondary" id="runAllVarsBtn">Run All Variables Test</button>
+        </div>
+        <div id="optimizerSummary" class="optimizer-result"></div>
+        <div id="optimizerTop" class="optimizer-result mono"></div>
+        <div class="mini-note">Coverage now includes strategy type, trend parameters, RSI thresholds, risk exits, leverage/size, and timing controls (min/max hold & cooldown). Still not literally infinite market variables.</div>
+      </div>
+
+      <div class="card">
+        <h3>Top 10 most active stocks (last 7 trading days)</h3>
+        <p>Ranked by average daily dollar volume from a broad liquid-symbol watchlist.</p>
+        <div class="toolbar">
+          <button class="secondary" id="refreshActiveBtn">Refresh top active list</button>
+        </div>
+        <table>
+          <thead>
+            <tr><th>Rank</th><th>Ticker</th><th>Avg $ Volume</th><th>Avg Volume</th><th>7D Return</th><th>Last Close</th></tr>
+          </thead>
+          <tbody id="activeStocksBody"></tbody>
+        </table>
+        <div id="activeStatus" class="mini-note"></div>
+      </div>
+
+      <div class="row">
+        <div class="card">
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:#66d9ef"></span>Strategy Equity</span>
+            <span><span class="legend-dot" style="background:#f59e0b"></span>Buy & Hold Benchmark</span>
+          </div>
+          <canvas id="equityChart"></canvas>
+        </div>
+        <div class="card"><div class="stats" id="stats"></div></div>
+      </div>
+
+      <div class="card">
+        <h3>Recent Trades</h3>
+        <table>
+          <thead><tr><th>Entry Date</th><th>Entry</th><th>Exit Date</th><th>Exit</th><th>Exit Type</th><th>PnL %</th></tr></thead>
+          <tbody id="trades"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const statusEl = $("status");
+      const statsEl = $("stats");
+      const tradesEl = $("trades");
+      const startInput = $("startDate");
+      const endInput = $("endDate");
+      const runBtn = $("runBtn");
+      const strategyTypeEl = $("strategyType");
+      const slowWrapEl = $("slowWrap");
+      const rsiLookbackWrap = $("rsiLookbackWrap");
+      const rsiBuyWrap = $("rsiBuyWrap");
+      const rsiSellWrap = $("rsiSellWrap");
+      const exportTradesBtn = $("exportTradesBtn");
+      const exportEquityBtn = $("exportEquityBtn");
+      const chartCanvas = $("equityChart");
+      const optimizeBtn = $("optimizeBtn");
+      const applyBestBtn = $("applyBestBtn");
+      const runAllVarsBtn = $("runAllVarsBtn");
+      const optimizerSummary = $("optimizerSummary");
+      const optimizerTop = $("optimizerTop");
+      const refreshActiveBtn = $("refreshActiveBtn");
+      const activeStocksBody = $("activeStocksBody");
+      const activeStatus = $("activeStatus");
+
+      let lastResult = null;
+      let lastBestConfig = null;
+      const historyCache = new Map();
+      const activeUniverse = [
+        "AAPL", "MSFT", "NVDA", "AMZN", "GOOGL", "META", "TSLA", "AMD", "NFLX", "INTC",
+        "MU", "AVGO", "QCOM", "PLTR", "SMCI", "ARM", "SOFI", "HOOD", "RIVN", "NIO",
+        "F", "GM", "BAC", "JPM", "C", "WFC", "XOM", "CVX", "T", "PFE",
+        "SPY", "QQQ", "IWM", "DIA", "COIN", "MARA", "RIOT", "SNAP", "UBER", "LYFT"
+      ];
+
+      function setStrategyUi() {
+        const strategy = strategyTypeEl.value;
+        slowWrapEl.classList.toggle("hidden", strategy !== "sma");
+        const isRsi = strategy === "rsi";
+        rsiLookbackWrap.classList.toggle("hidden", !isRsi);
+        rsiBuyWrap.classList.toggle("hidden", !isRsi);
+        rsiSellWrap.classList.toggle("hidden", !isRsi);
+      }
+
+      function setDateRange(rangeLabel) {
+        const end = new Date();
+        const start = new Date(end);
+        if (rangeLabel === "1M") start.setMonth(start.getMonth() - 1);
+        if (rangeLabel === "3M") start.setMonth(start.getMonth() - 3);
+        if (rangeLabel === "6M") start.setMonth(start.getMonth() - 6);
+        if (rangeLabel === "1Y") start.setFullYear(start.getFullYear() - 1);
+        if (rangeLabel === "3Y") start.setFullYear(start.getFullYear() - 3);
+        if (rangeLabel === "5Y") start.setFullYear(start.getFullYear() - 5);
+        endInput.value = end.toISOString().slice(0, 10);
+        startInput.value = start.toISOString().slice(0, 10);
+      }
+
+      function setLoading(isLoading, msg, target = runBtn) {
+        target.disabled = isLoading;
+        if (target === runBtn) target.textContent = isLoading ? "Running..." : "Run Backtest";
+        if (target === optimizeBtn) target.textContent = isLoading ? "Optimizing..." : "Find Best Combo";
+        if (msg) statusEl.textContent = msg;
+      }
+
+      function getInputs() {
+        return {
+          symbol: $("symbol").value.trim().toUpperCase(),
+          start: startInput.value,
+          end: endInput.value,
+          strategy: strategyTypeEl.value,
+          directionMode: $("directionMode").value,
+          fast: Number($("fast").value),
+          slow: Number($("slow").value),
+          rsiLookback: Number($("rsiLookback").value),
+          rsiBuy: Number($("rsiBuy").value),
+          rsiSell: Number($("rsiSell").value),
+          initialCapital: Number($("initialCapital").value),
+          leverage: Number($("leverage").value),
+          positionSizePct: Number($("positionSizePct").value),
+          feeBps: Number($("feeBps").value),
+          slippageBps: Number($("slippageBps").value),
+          stopLossPct: Number($("stopLossPct").value),
+          takeProfitPct: Number($("takeProfitPct").value),
+          trailingStopPct: Number($("trailingStopPct").value),
+          minHoldBars: Number($("minHoldBars").value),
+          maxHoldBars: Number($("maxHoldBars").value),
+          cooldownBars: Number($("cooldownBars").value),
+          trendMa: Number($("trendMa").value),
+          volumeMa: Number($("volumeMa").value),
+          volumeRatio: Number($("volumeRatio").value),
+        };
+      }
+
+      function validateInputs(i) {
+        if (!/^[A-Z.]{1,10}$/.test(i.symbol)) return "Ticker must be 1-10 chars (A-Z or .)";
+        if (!i.start || !i.end) return "Please select both start and end dates.";
+        if (new Date(i.start) >= new Date(i.end)) return "Start date must be before end date.";
+        if (i.fast < 2) return "Fast/lookback must be at least 2.";
+        if (i.strategy === "sma" && i.slow <= i.fast) return "For SMA, slow must be > fast.";
+        if (i.strategy === "rsi" && i.rsiBuy >= i.rsiSell) return "RSI buy must be less than RSI sell.";
+        if (i.initialCapital <= 0) return "Initial capital must be greater than 0.";
+        if (i.positionSizePct <= 0 || i.leverage <= 0) return "Position size and leverage must be > 0.";
+        if ([i.feeBps, i.slippageBps, i.stopLossPct, i.takeProfitPct, i.trailingStopPct].some(v => v < 0)) return "Costs/risk values cannot be negative.";
+        if (i.maxHoldBars < 0 || i.minHoldBars < 0 || i.cooldownBars < 0) return "Hold/cooldown bars cannot be negative.";
+        if (i.maxHoldBars > 0 && i.maxHoldBars < i.minHoldBars) return "Max hold must be >= min hold.";
+        return "";
+      }
+
+      function buildRange(min, max, step) {
+        const out = [];
+        for (let v = min; v <= max + 1e-9; v += step) out.push(Number(v.toFixed(8)));
+        return out;
+      }
+
+      function fmtPct(n) { return `${(n * 100).toFixed(2)}%`; }
+      function fmtMoney(n) { return `$${n.toFixed(2)}`; }
+      function mean(arr) { return arr.reduce((a, b) => a + b, 0) / (arr.length || 1); }
+      function stdev(arr) { const m = mean(arr); return Math.sqrt(mean(arr.map(v => (v - m) ** 2))); }
+
+      function computeMetrics(returns, equity, initialCapital) {
+        const peak = [];
+        let runningPeak = -Infinity;
+        for (const e of equity) {
+          runningPeak = Math.max(runningPeak, e);
+          peak.push(runningPeak);
+        }
+        const drawdowns = equity.map((e, idx) => (e - peak[idx]) / peak[idx]);
+        const nonZero = returns.filter(r => r !== 0);
+        return {
+          totalReturn: equity[equity.length - 1] / initialCapital - 1,
+          sharpe: stdev(returns) === 0 ? 0 : (mean(returns) / stdev(returns)) * Math.sqrt(252),
+          maxDrawdown: Math.min(...drawdowns),
+          winRate: nonZero.length ? nonZero.filter(r => r > 0).length / nonZero.length : 0,
+          finalEquity: equity[equity.length - 1],
+        };
+      }
+
+      function sma(values, n) {
+        const out = new Array(values.length).fill(null);
+        if (n <= 0) return out;
+        let sum = 0;
+        for (let i = 0; i < values.length; i++) {
+          sum += values[i];
+          if (i >= n) sum -= values[i - n];
+          if (i >= n - 1) out[i] = sum / n;
+        }
+        return out;
+      }
+
+      function ema(values, n) {
+        const out = new Array(values.length).fill(null);
+        const k = 2 / (n + 1);
+        let prev = values[0];
+        out[0] = prev;
+        for (let i = 1; i < values.length; i++) {
+          prev = (values[i] * k) + (prev * (1 - k));
+          out[i] = prev;
+        }
+        return out;
+      }
+
+      function rsi(values, lookback) {
+        const out = new Array(values.length).fill(null);
+        if (lookback <= 1) return out;
+        let gains = 0;
+        let losses = 0;
+        for (let i = 1; i <= lookback && i < values.length; i++) {
+          const diff = values[i] - values[i - 1];
+          gains += Math.max(diff, 0);
+          losses += Math.max(-diff, 0);
+        }
+        if (values.length > lookback) {
+          let avgGain = gains / lookback;
+          let avgLoss = losses / lookback;
+          out[lookback] = avgLoss === 0 ? 100 : (100 - (100 / (1 + (avgGain / avgLoss))));
+          for (let i = lookback + 1; i < values.length; i++) {
+            const diff = values[i] - values[i - 1];
+            const gain = Math.max(diff, 0);
+            const loss = Math.max(-diff, 0);
+            avgGain = ((avgGain * (lookback - 1)) + gain) / lookback;
+            avgLoss = ((avgLoss * (lookback - 1)) + loss) / lookback;
+            out[i] = avgLoss === 0 ? 100 : (100 - (100 / (1 + (avgGain / avgLoss))));
+          }
+        }
+        return out;
+      }
+
+      function breakoutSignals(closes, lookback, directionMode) {
+        const sig = new Array(closes.length).fill(0);
+        for (let i = lookback; i < closes.length; i++) {
+          const prev = closes.slice(i - lookback, i);
+          const hi = Math.max(...prev);
+          const lo = Math.min(...prev);
+          if (closes[i] > hi) sig[i] = 1;
+          else if (directionMode === "long_short" && closes[i] < lo) sig[i] = -1;
+          else sig[i] = sig[i - 1];
+        }
+        return sig;
+      }
+
+      function rsiSignals(closes, lookback, buy, sell, directionMode) {
+        const r = rsi(closes, lookback);
+        const sig = new Array(closes.length).fill(0);
+        for (let i = 1; i < closes.length; i++) {
+          sig[i] = sig[i - 1];
+          if (r[i] == null) continue;
+          if (r[i] <= buy) sig[i] = 1;
+          else if (r[i] >= sell) sig[i] = directionMode === "long_short" ? -1 : 0;
+        }
+        return sig;
+      }
+
+      function applyFilters(baseSignals, data, cfg) {
+        const out = [...baseSignals];
+        const closes = data.map(d => d.close);
+        const volumes = data.map(d => d.volume);
+        const trend = cfg.trendMa > 0 ? sma(closes, cfg.trendMa) : null;
+        const volMa = cfg.volumeMa > 0 ? sma(volumes, cfg.volumeMa) : null;
+
+        for (let i = 0; i < out.length; i++) {
+          let entryAllowed = true;
+          if (trend && trend[i] != null) {
+            if (out[i] > 0 && closes[i] < trend[i]) entryAllowed = false;
+            if (out[i] < 0 && closes[i] > trend[i]) entryAllowed = false;
+          }
+          if (volMa && volMa[i] != null) {
+            if (volumes[i] < volMa[i] * cfg.volumeRatio) entryAllowed = false;
+          }
+          if (!entryAllowed && out[i] !== 0) out[i] = i > 0 ? out[i - 1] : 0;
+        }
+        return out;
+      }
+
+      async function fetchHistoryByRange(symbol, startDate, endDate) {
+        const clean = symbol.toLowerCase();
+        const stooqSymbol = clean.includes(".") ? clean : `${clean}.us`;
+        const d1 = startDate.replaceAll("-", "");
+        const d2 = endDate.replaceAll("-", "");
+        const url = `https://stooq.com/q/d/l/?s=${stooqSymbol}&d1=${d1}&d2=${d2}&i=d`;
+        const candidates = [`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, url];
+
+        let lastErr = "";
+        for (const u of candidates) {
+          try {
+            const res = await fetch(u);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const csv = await res.text();
+            const data = csv.trim().split("\n").slice(1).filter(Boolean)
+              .map(r => {
+                const [date, open, high, low, close, volume] = r.split(",");
+                return { date, open: +open, high: +high, low: +low, close: +close, volume: +volume };
+              })
+              .filter(r => Number.isFinite(r.close));
+            if (!data.length) throw new Error("No bars returned");
+            return data;
+          } catch (e) {
+            lastErr = e.message;
+          }
+        }
+        throw new Error(`Could not fetch data for ${symbol}. Last error: ${lastErr}`);
+      }
+
+      async function fetchHistory(symbol, startDate, endDate) {
+        const key = `${symbol}|${startDate}|${endDate}`;
+        if (historyCache.has(key)) return historyCache.get(key);
+        const data = await fetchHistoryByRange(symbol, startDate, endDate);
+        if (data.length < 30) throw new Error("Not enough bars returned");
+        historyCache.set(key, data);
+        return data;
+      }
+
+      function formatLargeNumber(n) {
+        if (!Number.isFinite(n)) return "-";
+        if (n >= 1e12) return `${(n / 1e12).toFixed(2)}T`;
+        if (n >= 1e9) return `${(n / 1e9).toFixed(2)}B`;
+        if (n >= 1e6) return `${(n / 1e6).toFixed(2)}M`;
+        if (n >= 1e3) return `${(n / 1e3).toFixed(2)}K`;
+        return n.toFixed(2);
+      }
+
+      async function runWithConcurrency(items, limit, worker) {
+        const results = new Array(items.length);
+        let idx = 0;
+        async function loop() {
+          while (idx < items.length) {
+            const cur = idx;
+            idx += 1;
+            try { results[cur] = await worker(items[cur], cur); }
+            catch { results[cur] = null; }
+          }
+        }
+        await Promise.all(Array.from({ length: Math.max(1, Math.min(limit, items.length)) }, () => loop()));
+        return results;
+      }
+
+      async function loadTopActiveStocks() {
+        refreshActiveBtn.disabled = true;
+        activeStatus.textContent = "Building top active list...";
+        activeStocksBody.innerHTML = "";
+
+        const end = new Date();
+        const start = new Date(end);
+        start.setDate(end.getDate() - 14);
+        const startStr = start.toISOString().slice(0, 10);
+        const endStr = end.toISOString().slice(0, 10);
+
+        const rows = await runWithConcurrency(activeUniverse, 6, async (symbol, i) => {
+          if ((i + 1) % 5 === 0) activeStatus.textContent = `Loading symbols... ${i + 1}/${activeUniverse.length}`;
+          const bars = await fetchHistoryByRange(symbol, startStr, endStr);
+          if (bars.length < 7) return null;
+          const recent = bars.slice(-7);
+          return {
+            symbol,
+            avgVolume: mean(recent.map(r => r.volume)),
+            avgDollarVolume: mean(recent.map(r => r.volume * r.close)),
+            ret7d: (recent[recent.length - 1].close / recent[0].close) - 1,
+            lastClose: recent[recent.length - 1].close,
+          };
+        });
+
+        const ranked = rows.filter(Boolean).sort((a, b) => b.avgDollarVolume - a.avgDollarVolume).slice(0, 10);
+        activeStocksBody.innerHTML = ranked.map((r, i) => `
+          <tr>
+            <td>${i + 1}</td>
+            <td>${r.symbol}</td>
+            <td>$${formatLargeNumber(r.avgDollarVolume)}</td>
+            <td>${formatLargeNumber(r.avgVolume)}</td>
+            <td class="${r.ret7d >= 0 ? "good" : "bad"}">${fmtPct(r.ret7d)}</td>
+            <td>$${r.lastClose.toFixed(2)}</td>
+          </tr>
+        `).join("");
+        activeStatus.textContent = ranked.length
+          ? `Updated using ${rows.filter(Boolean).length} symbols. Ranked by avg daily dollar volume over last 7 trading bars.`
+          : "Could not compute active list right now (data source unavailable).";
+        refreshActiveBtn.disabled = false;
+      }
+
+      function runBacktest(data, cfg) {
+        const closes = data.map(d => d.close);
+
+        let baseSignals;
+        if (cfg.strategy === "sma") {
+          const fastMa = ema(closes, cfg.fast);
+          const slowMa = ema(closes, cfg.slow);
+          baseSignals = closes.map((_, i) => {
+            if (fastMa[i] == null || slowMa[i] == null) return 0;
+            if (fastMa[i] > slowMa[i]) return 1;
+            if (cfg.directionMode === "long_short") return -1;
+            return 0;
+          });
+        } else if (cfg.strategy === "breakout") {
+          baseSignals = breakoutSignals(closes, cfg.fast, cfg.directionMode);
+        } else {
+          baseSignals = rsiSignals(closes, cfg.rsiLookback, cfg.rsiBuy, cfg.rsiSell, cfg.directionMode);
+        }
+
+        if (cfg.directionMode === "long_only") baseSignals = baseSignals.map(v => Math.max(v, 0));
+        const rawSignals = applyFilters(baseSignals, data, cfg);
+
+        const totalCost = (cfg.feeBps + cfg.slippageBps) / 10000;
+        const returns = closes.map((c, i) => i === 0 ? 0 : (c / closes[i - 1]) - 1);
+
+        const strategyReturns = [0], benchmarkReturns = [0], positions = [0], signals = [rawSignals[0] || 0];
+        const trades = [];
+
+        let position = 0;
+        let entryPrice = null;
+        let entryDate = null;
+        let barsInTrade = 0;
+        let cooldown = 0;
+        let bestFavorablePrice = null;
+
+        const exposureMultiplier = (cfg.positionSizePct / 100) * cfg.leverage;
+
+        for (let i = 1; i < closes.length; i++) {
+          const price = closes[i];
+          const prevPosition = position;
+          benchmarkReturns.push(returns[i]);
+          let desired = rawSignals[i] || 0;
+          let exitType = "signal";
+
+          if (cooldown > 0 && prevPosition === 0 && desired !== 0) desired = 0;
+
+          if (prevPosition !== 0) {
+            barsInTrade += 1;
+            const pnlSinceEntry = prevPosition === 1
+              ? (price - entryPrice) / entryPrice
+              : (entryPrice - price) / entryPrice;
+
+            if (cfg.trailingStopPct > 0 && bestFavorablePrice != null) {
+              if (prevPosition === 1) bestFavorablePrice = Math.max(bestFavorablePrice, price);
+              else bestFavorablePrice = Math.min(bestFavorablePrice, price);
+
+              const trailingTriggered = prevPosition === 1
+                ? price <= bestFavorablePrice * (1 - (cfg.trailingStopPct / 100))
+                : price >= bestFavorablePrice * (1 + (cfg.trailingStopPct / 100));
+              if (trailingTriggered && barsInTrade >= cfg.minHoldBars) {
+                desired = 0;
+                exitType = "trailing-stop";
+              }
+            }
+
+            if (cfg.stopLossPct > 0 && pnlSinceEntry <= -(cfg.stopLossPct / 100) && barsInTrade >= cfg.minHoldBars) {
+              desired = 0;
+              exitType = "stop-loss";
+            }
+            if (cfg.takeProfitPct > 0 && pnlSinceEntry >= (cfg.takeProfitPct / 100) && barsInTrade >= cfg.minHoldBars) {
+              desired = 0;
+              exitType = "take-profit";
+            }
+            if (cfg.maxHoldBars > 0 && barsInTrade >= cfg.maxHoldBars) {
+              desired = 0;
+              exitType = "max-hold";
+            }
+          }
+
+          if (prevPosition !== 0 && barsInTrade < cfg.minHoldBars && desired === 0) desired = prevPosition;
+
+          if (prevPosition === 0 && desired !== 0) {
+            entryPrice = price;
+            entryDate = data[i].date;
+            barsInTrade = 0;
+            bestFavorablePrice = price;
+          }
+
+          if (prevPosition !== 0 && desired === 0 && entryPrice != null) {
+            const pnl = prevPosition === 1
+              ? (price - entryPrice) / entryPrice
+              : (entryPrice - price) / entryPrice;
+            trades.push({
+              side: prevPosition === 1 ? "long" : "short",
+              entryDate,
+              entryPrice,
+              exitDate: data[i].date,
+              exitPrice: price,
+              pnl,
+              exitType,
+            });
+            entryPrice = null;
+            entryDate = null;
+            barsInTrade = 0;
+            cooldown = cfg.cooldownBars;
+            bestFavorablePrice = null;
+          }
+
+          position = desired;
+          const turnover = Math.abs(position - prevPosition);
+          strategyReturns.push((prevPosition * exposureMultiplier * returns[i]) - (turnover * totalCost));
+          positions.push(prevPosition);
+          signals.push(position);
+          if (cooldown > 0 && position === 0) cooldown -= 1;
+        }
+
+        let eq = cfg.initialCapital;
+        const equity = strategyReturns.map(r => { eq *= 1 + r; return eq; });
+
+        let bEq = cfg.initialCapital;
+        const benchmarkEquity = benchmarkReturns.map(r => { bEq *= 1 + r; return bEq; });
+
+        const metrics = computeMetrics(strategyReturns, equity, cfg.initialCapital);
+        const benchmarkMetrics = computeMetrics(benchmarkReturns, benchmarkEquity, cfg.initialCapital);
+
+        return {
+          metrics,
+          benchmarkMetrics,
+          outperformance: metrics.totalReturn - benchmarkMetrics.totalReturn,
+          trades,
+          equity,
+          benchmarkEquity,
+          equityRows: data.map((bar, i) => ({
+            date: bar.date,
+            close: bar.close,
+            signal: signals[i],
+            position: positions[i],
+            strategyEquity: equity[i],
+            benchmarkEquity: benchmarkEquity[i],
+          })),
+        };
+      }
+
+      function renderStats(m, b, outperf) {
+        const cards = [
+          ["Strategy Return", fmtPct(m.totalReturn)], ["Benchmark Return", fmtPct(b.totalReturn)],
+          ["Outperformance", fmtPct(outperf)], ["Strategy Sharpe", m.sharpe.toFixed(2)],
+          ["Benchmark Sharpe", b.sharpe.toFixed(2)], ["Max Drawdown", fmtPct(m.maxDrawdown)],
+          ["Win Rate", fmtPct(m.winRate)], ["Final Equity", fmtMoney(m.finalEquity)],
+        ];
+        statsEl.innerHTML = cards.map(([k, v]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+      }
+
+      function renderTrades(trades) {
+        tradesEl.innerHTML = trades.slice(-20).reverse().map(t => `
+          <tr><td>${t.entryDate}</td><td>${t.entryPrice.toFixed(2)}</td><td>${t.exitDate}</td><td>${t.exitPrice.toFixed(2)}</td><td>${t.side}/${t.exitType}</td><td class="${t.pnl >= 0 ? "good" : "bad"}">${fmtPct(t.pnl)}</td></tr>
+        `).join("");
+      }
+
+      function resizeCanvasToDisplaySize(canvas) {
+        const dpr = Math.max(window.devicePixelRatio || 1, 1);
+        const rect = canvas.getBoundingClientRect();
+        const width = Math.floor(rect.width * dpr);
+        const height = Math.floor(rect.height * dpr);
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+        }
+      }
+
+      function renderChart(strategyValues, benchmarkValues) {
+        resizeCanvasToDisplaySize(chartCanvas);
+        const ctx = chartCanvas.getContext("2d");
+        const w = chartCanvas.width;
+        const h = chartCanvas.height;
+        const pad = 30;
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = "#0b122a";
+        ctx.fillRect(0, 0, w, h);
+
+        const all = strategyValues.concat(benchmarkValues);
+        const min = Math.min(...all);
+        const max = Math.max(...all);
+
+        ctx.strokeStyle = "#233569";
+        for (let i = 0; i < 4; i++) {
+          const y = pad + (i * (h - 2 * pad)) / 3;
+          ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(w - pad, y); ctx.stroke();
+        }
+
+        const drawSeries = (values, color) => {
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          values.forEach((v, i) => {
+            const x = pad + (i * (w - 2 * pad)) / Math.max(values.length - 1, 1);
+            const y = h - pad - ((v - min) / Math.max(max - min, 1e-9)) * (h - 2 * pad);
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          });
+          ctx.stroke();
+        };
+        drawSeries(benchmarkValues, "#f59e0b");
+        drawSeries(strategyValues, "#66d9ef");
+      }
+
+      function downloadCsv(filename, rows) {
+        if (!rows.length) return;
+        const headers = Object.keys(rows[0]);
+        const escapeCell = (v) => {
+          const s = String(v ?? "");
+          return s.includes(",") || s.includes("\n") ? `"${s.replaceAll('"', '""')}"` : s;
+        };
+        const lines = [headers.join(",")].concat(rows.map(r => headers.map(h => escapeCell(r[h])).join(",")));
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8;" }));
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(link.href);
+      }
+
+      async function runBacktestFlow() {
+        const input = getInputs();
+        const validationError = validateInputs(input);
+        if (validationError) {
+          statusEl.textContent = `Error: ${validationError}`;
+          return;
+        }
+
+        setLoading(true, "Fetching historical prices...", runBtn);
+        try {
+          const data = await fetchHistory(input.symbol, input.start, input.end);
+          setLoading(true, `Loaded ${data.length} bars for ${input.symbol}. Running strategy...`, runBtn);
+          const result = runBacktest(data, input);
+          renderStats(result.metrics, result.benchmarkMetrics, result.outperformance);
+          renderTrades(result.trades);
+          renderChart(result.equity, result.benchmarkEquity);
+          lastResult = result;
+          exportTradesBtn.disabled = false;
+          exportEquityBtn.disabled = false;
+          statusEl.textContent = `Done. Last bar: ${data[data.length - 1].date}`;
+        } catch (err) {
+          statusEl.textContent = `Error: ${err.message}`;
+        } finally {
+          setLoading(false, "", runBtn);
+        }
+      }
+
+      function getScore(metric, result) {
+        if (metric === "totalReturn") return result.metrics.totalReturn;
+        if (metric === "sharpe") return result.metrics.sharpe;
+        return result.outperformance;
+      }
+
+      function getOptimizerConfig(base) {
+        const cfg = {
+          scope: $("optScope").value,
+          metric: $("optMetric").value,
+          fastMin: Number($("optFastMin").value), fastMax: Number($("optFastMax").value), fastStep: Number($("optFastStep").value),
+          slowMin: Number($("optSlowMin").value), slowMax: Number($("optSlowMax").value), slowStep: Number($("optSlowStep").value),
+          rsiBuyMin: Number($("optRsiBuyMin").value), rsiBuyMax: Number($("optRsiBuyMax").value), rsiBuyStep: Number($("optRsiBuyStep").value),
+          rsiSellMin: Number($("optRsiSellMin").value), rsiSellMax: Number($("optRsiSellMax").value), rsiSellStep: Number($("optRsiSellStep").value),
+          slMin: Number($("optSlMin").value), slMax: Number($("optSlMax").value), slStep: Number($("optSlStep").value),
+          tpMin: Number($("optTpMin").value), tpMax: Number($("optTpMax").value), tpStep: Number($("optTpStep").value),
+          trailMin: Number($("optTrailMin").value), trailMax: Number($("optTrailMax").value), trailStep: Number($("optTrailStep").value),
+          posSizeMin: Number($("optPosSizeMin").value), posSizeMax: Number($("optPosSizeMax").value), posSizeStep: Number($("optPosSizeStep").value),
+          levMin: Number($("optLevMin").value), levMax: Number($("optLevMax").value), levStep: Number($("optLevStep").value),
+          cooldownMin: Number($("optCooldownMin").value), cooldownMax: Number($("optCooldownMax").value), cooldownStep: Number($("optCooldownStep").value),
+          maxHoldMin: Number($("optMaxHoldMin").value), maxHoldMax: Number($("optMaxHoldMax").value), maxHoldStep: Number($("optMaxHoldStep").value),
+          cap: Number($("optCap").value),
+          base,
+        };
+        const positives = [cfg.fastStep, cfg.slowStep, cfg.rsiBuyStep, cfg.rsiSellStep, cfg.slStep, cfg.tpStep, cfg.trailStep, cfg.posSizeStep, cfg.levStep, cfg.cooldownStep, cfg.maxHoldStep].every(v => v > 0);
+        if (!positives) throw new Error("All optimizer steps must be > 0.");
+        if (cfg.cap < 100) throw new Error("Safety cap must be at least 100.");
+        return cfg;
+      }
+
+      async function optimizeFlow() {
+        const base = getInputs();
+        const validationError = validateInputs(base);
+        if (validationError) {
+          statusEl.textContent = `Error: ${validationError}`;
+          return;
+        }
+
+        let opt;
+        try {
+          opt = getOptimizerConfig(base);
+        } catch (err) {
+          statusEl.textContent = `Error: ${err.message}`;
+          return;
+        }
+
+        setLoading(true, "Preparing optimization...", optimizeBtn);
+        optimizerSummary.textContent = "";
+        optimizerTop.textContent = "";
+
+        try {
+          const data = await fetchHistory(base.symbol, base.start, base.end);
+          const fastVals = buildRange(opt.fastMin, opt.fastMax, opt.fastStep);
+          const slowVals = buildRange(opt.slowMin, opt.slowMax, opt.slowStep);
+          const rsiBuyVals = buildRange(opt.rsiBuyMin, opt.rsiBuyMax, opt.rsiBuyStep);
+          const rsiSellVals = buildRange(opt.rsiSellMin, opt.rsiSellMax, opt.rsiSellStep);
+          const slVals = buildRange(opt.slMin, opt.slMax, opt.slStep);
+          const tpVals = buildRange(opt.tpMin, opt.tpMax, opt.tpStep);
+          const trailVals = buildRange(opt.trailMin, opt.trailMax, opt.trailStep);
+          const posSizeVals = buildRange(opt.posSizeMin, opt.posSizeMax, opt.posSizeStep);
+          const levVals = buildRange(opt.levMin, opt.levMax, opt.levStep);
+          const cooldownVals = buildRange(opt.cooldownMin, opt.cooldownMax, opt.cooldownStep);
+          const maxHoldVals = buildRange(opt.maxHoldMin, opt.maxHoldMax, opt.maxHoldStep);
+          const strategies = opt.scope === "all" ? ["sma", "breakout", "rsi"] : [base.strategy];
+
+          let estimated = 0;
+          for (const s of strategies) {
+            const core = s === "sma"
+              ? fastVals.length * slowVals.length
+              : s === "rsi"
+                ? fastVals.length * rsiBuyVals.length * rsiSellVals.length
+                : fastVals.length;
+            estimated += core * slVals.length * tpVals.length * trailVals.length * posSizeVals.length * levVals.length * cooldownVals.length * maxHoldVals.length;
+          }
+          if (estimated > opt.cap) throw new Error(`Estimated ${estimated} combinations exceeds cap ${opt.cap}. Narrow ranges.`);
+
+          let tested = 0;
+          let best = null;
+          const top = [];
+          const maybePushTop = (e) => {
+            top.push(e);
+            top.sort((a, b) => b.score - a.score);
+            if (top.length > 10) top.pop();
+          };
+
+          for (const strategy of strategies) {
+            for (const fast of fastVals) {
+              const slowCandidates = strategy === "sma" ? slowVals : [base.slow];
+              const rsiBuyCandidates = strategy === "rsi" ? rsiBuyVals : [base.rsiBuy];
+              const rsiSellCandidates = strategy === "rsi" ? rsiSellVals : [base.rsiSell];
+
+              for (const slow of slowCandidates) {
+                if (strategy === "sma" && slow <= fast) continue;
+                for (const rsiBuy of rsiBuyCandidates) {
+                  for (const rsiSell of rsiSellCandidates) {
+                    if (strategy === "rsi" && rsiBuy >= rsiSell) continue;
+                    for (const sl of slVals) {
+                      for (const tp of tpVals) {
+                        for (const trail of trailVals) {
+                          for (const posSize of posSizeVals) {
+                            for (const lev of levVals) {
+                              for (const cooldownBars of cooldownVals) {
+                                for (const maxHoldBars of maxHoldVals) {
+                                  const candidate = {
+                                    ...base,
+                                    strategy,
+                                    fast,
+                                    slow,
+                                    rsiBuy,
+                                    rsiSell,
+                                    stopLossPct: sl,
+                                    takeProfitPct: tp,
+                                    trailingStopPct: trail,
+                                    positionSizePct: posSize,
+                                    leverage: lev,
+                                    cooldownBars,
+                                    maxHoldBars,
+                                  };
+                                  const result = runBacktest(data, candidate);
+                                  const score = getScore(opt.metric, result);
+                                  tested += 1;
+
+                                  const row = {
+                                    score,
+                                    strategy,
+                                    fast,
+                                    slow,
+                                    rsiBuy,
+                                    rsiSell,
+                                    sl,
+                                    tp,
+                                    trail,
+                                    posSize,
+                                    lev,
+                                    cooldownBars,
+                                    maxHoldBars,
+                                    totalReturn: result.metrics.totalReturn,
+                                    sharpe: result.metrics.sharpe,
+                                    outperformance: result.outperformance,
+                                  };
+                                  maybePushTop(row);
+                                  if (!best || score > best.score) best = { ...row, candidate, result };
+
+                                  if (tested % 200 === 0) {
+                                    statusEl.textContent = `Optimizing... tested ${tested}/${estimated}`;
+                                    await new Promise(requestAnimationFrame);
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+
+          if (!best) throw new Error("No valid combinations were generated.");
+
+          lastBestConfig = best.candidate;
+          applyBestBtn.disabled = false;
+          optimizerSummary.innerHTML = `Best by <b>${opt.metric}</b>: strat=<b>${best.strategy}</b> fast=<b>${best.fast}</b> slow=<b>${best.slow}</b> rsiBuy=<b>${best.rsiBuy}</b> rsiSell=<b>${best.rsiSell}</b> SL=<b>${best.sl}%</b> TP=<b>${best.tp}%</b> Trail=<b>${best.trail}%</b> Pos=<b>${best.posSize}%</b> Lev=<b>${best.lev}</b> Cooldown=<b>${best.cooldownBars}</b> MaxHold=<b>${best.maxHoldBars}</b> tested=<b>${tested}</b>.`;
+          optimizerTop.innerHTML = top.map((r, idx) =>
+            `${idx + 1}. ${r.strategy} f=${r.fast} s=${r.slow} rsi=${r.rsiBuy}/${r.rsiSell} sl=${r.sl} tp=${r.tp} tr=${r.trail} pos=${r.posSize}% lev=${r.lev} cd=${r.cooldownBars} mh=${r.maxHoldBars} | score=${r.score.toFixed(4)} ret=${(r.totalReturn*100).toFixed(2)}% sharpe=${r.sharpe.toFixed(2)} out=${(r.outperformance*100).toFixed(2)}%`
+          ).join("<br>");
+
+          renderStats(best.result.metrics, best.result.benchmarkMetrics, best.result.outperformance);
+          renderTrades(best.result.trades);
+          renderChart(best.result.equity, best.result.benchmarkEquity);
+          lastResult = best.result;
+          exportTradesBtn.disabled = false;
+          exportEquityBtn.disabled = false;
+          statusEl.textContent = `Optimization complete. Best ${opt.metric}: ${best.score.toFixed(4)}`;
+        } catch (err) {
+          statusEl.textContent = `Error: ${err.message}`;
+        } finally {
+          setLoading(false, "", optimizeBtn);
+        }
+      }
+
+      async function runAllVariablesTest() {
+        // One-click preset for testing across all included strategies and broad variable ranges.
+        $("optScope").value = "all";
+        $("optMetric").value = "outperformance";
+
+        $("optFastMin").value = "5";
+        $("optFastMax").value = "40";
+        $("optFastStep").value = "5";
+
+        $("optSlowMin").value = "20";
+        $("optSlowMax").value = "120";
+        $("optSlowStep").value = "10";
+
+        $("optRsiBuyMin").value = "20";
+        $("optRsiBuyMax").value = "40";
+        $("optRsiBuyStep").value = "5";
+        $("optRsiSellMin").value = "60";
+        $("optRsiSellMax").value = "85";
+        $("optRsiSellStep").value = "5";
+
+        $("optSlMin").value = "0";
+        $("optSlMax").value = "12";
+        $("optSlStep").value = "4";
+        $("optTpMin").value = "0";
+        $("optTpMax").value = "30";
+        $("optTpStep").value = "10";
+        $("optTrailMin").value = "0";
+        $("optTrailMax").value = "10";
+        $("optTrailStep").value = "5";
+
+        $("optPosSizeMin").value = "50";
+        $("optPosSizeMax").value = "150";
+        $("optPosSizeStep").value = "50";
+        $("optLevMin").value = "1";
+        $("optLevMax").value = "2";
+        $("optLevStep").value = "0.5";
+
+        $("optCooldownMin").value = "0";
+        $("optCooldownMax").value = "3";
+        $("optCooldownStep").value = "1";
+        $("optMaxHoldMin").value = "0";
+        $("optMaxHoldMax").value = "20";
+        $("optMaxHoldStep").value = "10";
+        $("optCap").value = "6000";
+
+        statusEl.textContent = "Running one-click all-variable test...";
+        await optimizeFlow();
+      }
+
+      function applyBestConfigToForm() {
+        if (!lastBestConfig) return;
+        strategyTypeEl.value = lastBestConfig.strategy;
+        $("fast").value = String(lastBestConfig.fast);
+        $("slow").value = String(lastBestConfig.slow);
+        $("rsiBuy").value = String(lastBestConfig.rsiBuy);
+        $("rsiSell").value = String(lastBestConfig.rsiSell);
+        $("stopLossPct").value = String(lastBestConfig.stopLossPct);
+        $("takeProfitPct").value = String(lastBestConfig.takeProfitPct);
+        $("trailingStopPct").value = String(lastBestConfig.trailingStopPct);
+        $("positionSizePct").value = String(lastBestConfig.positionSizePct);
+        $("leverage").value = String(lastBestConfig.leverage);
+        $("cooldownBars").value = String(lastBestConfig.cooldownBars);
+        $("maxHoldBars").value = String(lastBestConfig.maxHoldBars);
+        setStrategyUi();
+        statusEl.textContent = "Applied best combination to form.";
+      }
+
+      exportTradesBtn.addEventListener("click", () => lastResult && downloadCsv("trades.csv", lastResult.trades));
+      exportEquityBtn.addEventListener("click", () => lastResult && downloadCsv("equity_curve.csv", lastResult.equityRows));
+      runBtn.addEventListener("click", runBacktestFlow);
+      optimizeBtn.addEventListener("click", optimizeFlow);
+      applyBestBtn.addEventListener("click", applyBestConfigToForm);
+      runAllVarsBtn.addEventListener("click", runAllVariablesTest);
+      refreshActiveBtn.addEventListener("click", loadTopActiveStocks);
+      strategyTypeEl.addEventListener("change", setStrategyUi);
+      $("symbol").addEventListener("keydown", (e) => { if (e.key === "Enter") runBacktestFlow(); });
+      window.addEventListener("resize", () => { if (lastResult) renderChart(lastResult.equity, lastResult.benchmarkEquity); });
+      document.querySelectorAll(".range-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".range-btn").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          setDateRange(btn.dataset.range);
+        });
+      });
+
+      setDateRange("1Y");
+      setStrategyUi();
+      loadTopActiveStocks();
+    </script>
   </body>
 </html>
-  </body>
-      </style></title>
-  </head>
