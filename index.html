@@ -1,211 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Ashky Links</title>
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-      <style>
-                * {
-                              margin: 0;
-                              padding: 0;
-                              box-sizing: border-box;
-                }
-
-                body {
-                              font-family: 'Quicksand', sans-serif;
-                              min-height: 100vh;
-                              display: flex;
-                              justify-content: center;
-                              padding: 20px;
-                              color: #ffffff;
-                              position: relative;
-                }
-
-                .background-image {
-                              position: fixed;
-                              top: 0;
-                              left: 0;
-                              width: 100%;
-                              height: 100%;
-                              z-index: -2;
-                              background: url('background.jpg') center center / cover no-repeat;
-                }
-
-                .background-overlay {
-                              position: fixed;
-                              top: 0;
-                              left: 0;
-                              width: 100%;
-                              height: 100%;
-                              z-index: -1;
-                              background: rgba(0, 0, 0, 0.7);
-                }
-
-                .container {
-                              max-width: 500px;
-                              width: 100%;
-                              text-align: center;
-                              padding: 30px 20px;
-                }
-
-                .profile-section {
-                              margin-bottom: 25px;
-                }
-
-                .profile-pic {
-                              width: 150px;
-                              height: 150px;
-                              border-radius: 50%;
-                              border: 4px solid #c8e600;
-                              object-fit: cover;
-                              margin-bottom: 15px;
-                              box-shadow: 0 0 30px rgba(200, 230, 0, 0.3);
-                              transition: transform 0.3s ease;
-                              background: #2a2a2a;
-                }
-
-                .profile-pic:hover {
-                              transform: scale(1.05);
-                }
-
-                h1 {
-                              font-size: 2em;
-                              font-weight: 700;
-                              color: #c8e600;
-                              margin-bottom: 5px;
-                              text-shadow: 0 0 20px rgba(200, 230, 0, 0.5);
-                }
-
-                .subtitle {
-                              color: #ccc;
-                              font-size: 1em;
-                              margin-bottom: 10px;
-                }
-
-                .bio {
-                              color: #ddd;
-                              font-size: 0.95em;
-                              line-height: 1.5;
-                              margin-bottom: 25px;
-                }
-
-                .links {
-                              display: flex;
-                              flex-direction: column;
-                              gap: 12px;
-                }
-
-                .link-btn {
-                              display: flex;
-                              align-items: center;
-                              justify-content: center;
-                              gap: 12px;
-                              padding: 15px 20px;
-                              background: rgba(50, 50, 50, 0.8);
-                              border: 2px solid #444;
-                              border-radius: 50px;
-                              color: #fff;
-                              text-decoration: none;
-                              font-weight: 600;
-                              font-size: 1em;
-                              transition: all 0.3s ease;
-                              backdrop-filter: blur(5px);
-                }
-
-                .link-btn:hover {
-                              background: linear-gradient(135deg, #c8e600 0%, #a0b800 100%);
-                              border-color: #c8e600;
-                              color: #1a1a1a;
-                              transform: translateY(-3px);
-                              box-shadow: 0 10px 30px rgba(200, 230, 0, 0.3);
-                }
-
-                .link-btn i {
-                              font-size: 1.3em;
-                }
-
-                .link-btn.instagram:hover {
-                              background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-                              border-color: #dc2743;
-                              color: #fff;
-                }
-
-                .link-btn.twitter:hover {
-                              background: #000;
-                              border-color: #fff;
-                              color: #fff;
-                }
-
-                .link-btn.tiktok:hover {
-                              background: linear-gradient(135deg, #00f2ea, #ff0050);
-                              border-color: #00f2ea;
-                              color: #fff;
-                }
-
-                .link-btn.threads:hover {
-                              background: #000;
-                              border-color: #fff;
-                              color: #fff;
-                }
-
-                .link-btn.xiaohongshu:hover {
-                              background: #ff2442;
-                              border-color: #ff2442;
-                              color: #fff;
-                }
-
-                @media (max-width: 400px) {
-                              h1 { font-size: 1.6em; }
-                              .profile-pic { width: 120px; height: 120px; }
-                              .link-btn { padding: 12px 15px; font-size: 0.9em; }
-                }
-            </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Stock Backtester</title>
+    <style>
+      :root {
+        --bg: #0b1020;
+        --card: #121a33;
+        --card-2: #1a2448;
+        --text: #e6ecff;
+        --muted: #a3b3e6;
+        --good: #22c55e;
+        --bad: #ef4444;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: radial-gradient(circle at top right, #1b2d6b, var(--bg) 45%);
+        color: var(--text);
+      }
+      .app { max-width: 1120px; margin: 0 auto; padding: 20px; }
+      .card {
+        background: linear-gradient(180deg, var(--card), var(--card-2));
+        border: 1px solid #31407a;
+        border-radius: 14px;
+        padding: 16px;
+        margin-bottom: 16px;
+      }
+      h1 { margin: 0 0 4px; font-size: 1.5rem; }
+      p { color: var(--muted); margin: 4px 0 12px; }
+      .controls { display: grid; grid-template-columns: repeat(6, minmax(110px, 1fr)); gap: 10px; }
+      .controls label {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.86rem;
+        color: var(--muted);
+      }
+      input, select, button {
+        border-radius: 8px;
+        border: 1px solid #425296;
+        background: #0f1731;
+        color: var(--text);
+        padding: 9px 10px;
+      }
+      button {
+        background: linear-gradient(180deg, #2b4bc5, #1f3a9a);
+        border: 1px solid #5f7bf5;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      button.secondary {
+        background: #111b3f;
+        border: 1px solid #5066bd;
+      }
+      .range-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0 0; }
+      .range-btn {
+        padding: 6px 10px;
+        border-radius: 999px;
+        border: 1px solid #5066bd;
+        background: #111b3f;
+        color: var(--text);
+        font-size: 0.8rem;
+      }
+      .range-btn.active { background: #2a49c0; border-color: #86a0ff; }
+      .toolbar { display: flex; gap: 10px; margin-top: 10px; }
+      .row { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; }
+      .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .stat { border: 1px solid #2e3b72; background: #0f1731; border-radius: 10px; padding: 10px; }
+      .stat .k { color: var(--muted); font-size: 0.8rem; }
+      .stat .v { font-size: 1.2rem; font-weight: 700; }
+      .chart-legend {
+        font-size: 0.8rem;
+        color: var(--muted);
+        display: flex;
+        gap: 14px;
+        margin-bottom: 8px;
+      }
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 6px;
+      }
+      #equityChart {
+        width: 100%;
+        height: 320px;
+        border-radius: 10px;
+        border: 1px solid #2e3b72;
+        background: #0b122a;
+      }
+      table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+      th, td { border-bottom: 1px solid #283567; padding: 8px; text-align: left; }
+      .hint { font-size: 0.82rem; color: var(--muted); }
+      .good { color: var(--good); }
+      .bad { color: var(--bad); }
+      @media (max-width: 900px) {
+        .controls { grid-template-columns: repeat(2, 1fr); }
+        .row { grid-template-columns: 1fr; }
+      }
+    </style>
   </head>
   <body>
-        <div class="background-image"></div>
-        <div class="background-overlay"></div>
-
-        <div class="container">
-                  <div class="profile-section">
-                                <img src="Icon.png" alt="Ashky Profile" class="profile-pic">
-                                <h1>Ashky</h1>
-                              <p class="subtitle">Ricky & Asher</p>
-                              <p class="bio">Hi! Feel free to take a look around here! UwU</p>
-                  </div>
-                
-                <div class="links">
-                            <a href="https://www.instagram.com/ashky_uwu" target="_blank" class="link-btn instagram">
-                                            <i class="fab fa-instagram"></i>
-                                            Instagram
-                            </a>
-                            
-                            <a href="https://www.threads.com/@ashky_uwu" target="_blank" class="link-btn threads">
-                                            <i class="fab fa-threads"></i>
-                                            Threads
-                            </a>
-                            
-                            <a href="https://x.com/Asher_Panth" target="_blank" class="link-btn twitter">
-                                            <i class="fab fa-x-twitter"></i>
-                                            Twitter
-                            </a>
-                            
-                            <a href="https://www.tiktok.com/@ashky7705" target="_blank" class="link-btn tiktok">
-                                            <i class="fab fa-tiktok"></i>
-                                            TikTok
-                            </a>
-                            
-                            <a href="https://xhslink.com/m/1hzA6BfiLRh" target="_blank" class="link-btn xiaohongshu">
-                                            <i class="fas fa-book-open"></i>
-                                            小红书 Xiaohongshu
-                            </a>
-                </div>
+    <div class="app">
+      <div class="card">
+        <h1>Stock Backtester (No CSV Upload)</h1>
+        <p>Enter a ticker, choose a strategy, and the app fetches historical prices automatically.</p>
+        <div class="controls">
+          <label>
+            Ticker (US)
+            <input id="symbol" value="AAPL" list="tickerSuggestions" placeholder="e.g. AAPL" />
+            <datalist id="tickerSuggestions">
+              <option value="AAPL"></option>
+              <option value="MSFT"></option>
+              <option value="NVDA"></option>
+              <option value="AMZN"></option>
+              <option value="GOOGL"></option>
+              <option value="META"></option>
+              <option value="TSLA"></option>
+              <option value="NFLX"></option>
+              <option value="AMD"></option>
+              <option value="SPY"></option>
+              <option value="QQQ"></option>
+            </datalist>
+          </label>
+          <label>Start Date<input id="startDate" type="date" /></label>
+          <label>End Date<input id="endDate" type="date" /></label>
+          <label>
+            Strategy
+            <select id="strategyType">
+              <option value="sma">SMA Cross</option>
+              <option value="breakout">20-Day Breakout</option>
+            </select>
+          </label>
+          <label>Fast / Breakout Lookback<input id="fast" type="number" value="20" min="2" /></label>
+          <label>Slow Window<input id="slow" type="number" value="50" min="5" /></label>
+          <label>Initial Capital<input id="initialCapital" type="number" value="10000" min="100" step="100" /></label>
+          <label>Fee (bps per trade)<input id="feeBps" type="number" value="1" min="0" step="0.1" /></label>
+          <label>Slippage (bps)<input id="slippageBps" type="number" value="2" min="0" step="0.1" /></label>
+          <label>Stop Loss %<input id="stopLossPct" type="number" value="8" min="0" step="0.1" /></label>
+          <label>Take Profit %<input id="takeProfitPct" type="number" value="15" min="0" step="0.1" /></label>
+          <label style="align-self:end;"><button id="runBtn">Run Backtest</button></label>
         </div>
+        <div class="range-buttons">
+          <button class="range-btn" data-range="1M">1M</button>
+          <button class="range-btn" data-range="3M">3M</button>
+          <button class="range-btn" data-range="6M">6M</button>
+          <button class="range-btn active" data-range="1Y">1Y</button>
+          <button class="range-btn" data-range="3Y">3Y</button>
+          <button class="range-btn" data-range="5Y">5Y</button>
+        </div>
+        <div class="toolbar">
+          <button class="secondary" id="exportTradesBtn" disabled>Export Trades CSV</button>
+          <button class="secondary" id="exportEquityBtn" disabled>Export Equity CSV</button>
+        </div>
+        <div id="status" class="hint" style="margin-top:10px;"></div>
+      </div>
+
+      <div class="row">
+        <div class="card">
+          <div class="chart-legend">
+            <span><span class="legend-dot" style="background:#66d9ef"></span>Strategy Equity</span>
+            <span><span class="legend-dot" style="background:#f59e0b"></span>Buy & Hold Benchmark</span>
+          </div>
+          <canvas id="equityChart" width="760" height="320"></canvas>
+        </div>
+        <div class="card"><div class="stats" id="stats"></div></div>
+      </div>
+
+      <div class="card">
+        <h3>Recent Trades</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Entry Date</th><th>Entry</th><th>Exit Date</th><th>Exit</th><th>Exit Type</th><th>PnL %</th>
+            </tr>
+          </thead>
+          <tbody id="trades"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      const statusEl = document.getElementById("status");
+      const statsEl = document.getElementById("stats");
+      const tradesEl = document.getElementById("trades");
+      const startInput = document.getElementById("startDate");
+      const endInput = document.getElementById("endDate");
+      const exportTradesBtn = document.getElementById("exportTradesBtn");
+      const exportEquityBtn = document.getElementById("exportEquityBtn");
+      let lastResult = null;
+
+      function setDateRange(rangeLabel) {
+        const end = new Date();
+        const start = new Date(end);
+        if (rangeLabel === "1M") start.setMonth(start.getMonth() - 1);
+        if (rangeLabel === "3M") start.setMonth(start.getMonth() - 3);
+        if (rangeLabel === "6M") start.setMonth(start.getMonth() - 6);
+        if (rangeLabel === "1Y") start.setFullYear(start.getFullYear() - 1);
+        if (rangeLabel === "3Y") start.setFullYear(start.getFullYear() - 3);
+        if (rangeLabel === "5Y") start.setFullYear(start.getFullYear() - 5);
+        endInput.value = end.toISOString().slice(0, 10);
+        startInput.value = start.toISOString().slice(0, 10);
+      }
+
+      setDateRange("1Y");
+      document.querySelectorAll(".range-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".range-btn").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          setDateRange(btn.dataset.range);
+        });
+      });
+
+      function fmtPct(n) { return `${(n * 100).toFixed(2)}%`; }
+      function fmtMoney(n) { return `$${n.toFixed(2)}`; }
+      function mean(arr) { return arr.reduce((a, b) => a + b, 0) / (arr.length || 1); }
+      function stdev(arr) {
+        const m = mean(arr);
+        return Math.sqrt(mean(arr.map(v => (v - m) ** 2)));
+      }
+
+      function computeMetrics(returns, equity, initialCapital) {
+        const peak = [];
+        let runningPeak = -Infinity;
+        for (const e of equity) {
+          runningPeak = Math.max(runningPeak, e);
+          peak.push(runningPeak);
+        }
+        const drawdowns = equity.map((e, i) => (e - peak[i]) / peak[i]);
+        const nonZero = returns.filter(r => r !== 0);
+        return {
+          totalReturn: equity[equity.length - 1] / initialCapital - 1,
+          sharpe: stdev(returns) === 0 ? 0 : (mean(returns) / stdev(returns)) * Math.sqrt(252),
+          maxDrawdown: Math.min(...drawdowns),
+          winRate: nonZero.length ? nonZero.filter(r => r > 0).length / nonZero.length : 0,
+          finalEquity: equity[equity.length - 1],
+        };
+      }
+
+      function sma(values, n) {
+        const out = new Array(values.length).fill(null);
+        let sum = 0;
+        for (let i = 0; i < values.length; i++) {
+          sum += values[i];
+          if (i >= n) sum -= values[i - n];
+          if (i >= n - 1) out[i] = sum / n;
+        }
+        return out;
+      }
+
+      function breakoutSignal(closes, lookback) {
+        const signals = new Array(closes.length).fill(0);
+        for (let i = lookback; i < closes.length; i++) {
+          const prev = closes.slice(i - lookback, i);
+          const highest = Math.max(...prev);
+          signals[i] = closes[i] > highest ? 1 : signals[i - 1];
+          if (closes[i] < mean(prev)) signals[i] = 0;
+        }
+        return signals;
+      }
+
+      async function fetchHistory(symbol, startDate, endDate) {
+        const clean = symbol.trim().toLowerCase();
+        const stooqSymbol = clean.includes(".") ? clean : `${clean}.us`;
+        const d1 = startDate.replaceAll("-", "");
+        const d2 = endDate.replaceAll("-", "");
+        const url = `https://stooq.com/q/d/l/?s=${stooqSymbol}&d1=${d1}&d2=${d2}&i=d`;
+        const candidates = [`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, url];
+        let lastErr = "";
+        for (const u of candidates) {
+          try {
+            const res = await fetch(u);
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const csv = await res.text();
+            const rows = csv.trim().split("\n").slice(1).filter(Boolean);
+            const data = rows.map(r => {
+              const [date, open, high, low, close, volume] = r.split(",");
+              return { date, open: +open, high: +high, low: +low, close: +close, volume: +volume };
+            }).filter(r => Number.isFinite(r.close));
+            if (data.length < 30) throw new Error("Not enough bars returned");
+            return data;
+          } catch (e) {
+            lastErr = e.message;
+          }
+        }
+        throw new Error(`Could not fetch data for ${symbol}. Last error: ${lastErr}`);
+      }
+
+      function runBacktest(data, strategy, fast, slow, initialCapital, feeBps, slippageBps, stopLossPct, takeProfitPct) {
+        const closes = data.map(d => d.close);
+        let rawSignals;
+
+        if (strategy === "sma") {
+          const fastMa = sma(closes, fast);
+          const slowMa = sma(closes, slow);
+          rawSignals = closes.map((_, i) => (fastMa[i] !== null && slowMa[i] !== null && fastMa[i] > slowMa[i]) ? 1 : 0);
+        } else {
+          rawSignals = breakoutSignal(closes, fast);
+        }
+
+        const totalCost = (feeBps + slippageBps) / 10000;
+        const returns = closes.map((c, i) => i === 0 ? 0 : (c / closes[i - 1]) - 1);
+
+        const strategyReturns = [0];
+        const benchmarkReturns = [0];
+        const positions = [0];
+        const signals = [rawSignals[0] || 0];
+
+        const trades = [];
+        let position = 0;
+        let entryPrice = null;
+        let entryDate = null;
+
+        for (let i = 1; i < closes.length; i++) {
+          const closePrice = closes[i];
+          const barReturn = returns[i];
+          benchmarkReturns.push(barReturn);
+
+          const prevPosition = position;
+          let desiredPosition = rawSignals[i] || 0;
+          let exitType = "signal";
+
+          if (prevPosition === 1 && entryPrice) {
+            const pnlSinceEntry = (closePrice - entryPrice) / entryPrice;
+            if (stopLossPct > 0 && pnlSinceEntry <= -(stopLossPct / 100)) {
+              desiredPosition = 0;
+              exitType = "stop-loss";
+            }
+            if (takeProfitPct > 0 && pnlSinceEntry >= (takeProfitPct / 100)) {
+              desiredPosition = 0;
+              exitType = "take-profit";
+            }
+          }
+
+          if (prevPosition === 0 && desiredPosition === 1) {
+            entryPrice = closePrice;
+            entryDate = data[i].date;
+          }
+
+          if (prevPosition === 1 && desiredPosition === 0 && entryPrice) {
+            trades.push({
+              entryDate,
+              entryPrice,
+              exitDate: data[i].date,
+              exitPrice: closePrice,
+              pnl: (closePrice - entryPrice) / entryPrice,
+              exitType,
+            });
+            entryPrice = null;
+            entryDate = null;
+          }
+
+          position = desiredPosition;
+          const turnover = Math.abs(position - prevPosition);
+          strategyReturns.push(prevPosition * barReturn - turnover * totalCost);
+          positions.push(prevPosition);
+          signals.push(position);
+        }
+
+        let eq = initialCapital;
+        const equity = strategyReturns.map(r => { eq *= 1 + r; return eq; });
+
+        let bEq = initialCapital;
+        const benchmarkEquity = benchmarkReturns.map(r => { bEq *= 1 + r; return bEq; });
+
+        const metrics = computeMetrics(strategyReturns, equity, initialCapital);
+        const benchmarkMetrics = computeMetrics(benchmarkReturns, benchmarkEquity, initialCapital);
+        const outperformance = metrics.totalReturn - benchmarkMetrics.totalReturn;
+
+        const equityRows = data.map((bar, i) => ({
+          date: bar.date,
+          close: bar.close,
+          signal: signals[i],
+          position: positions[i],
+          strategyEquity: equity[i],
+          benchmarkEquity: benchmarkEquity[i],
+        }));
+
+        return { metrics, benchmarkMetrics, outperformance, trades, equity, benchmarkEquity, equityRows };
+      }
+
+      function renderStats(metrics, benchmarkMetrics, outperformance) {
+        const cards = [
+          ["Strategy Return", fmtPct(metrics.totalReturn)],
+          ["Benchmark Return", fmtPct(benchmarkMetrics.totalReturn)],
+          ["Outperformance", fmtPct(outperformance)],
+          ["Strategy Sharpe", metrics.sharpe.toFixed(2)],
+          ["Benchmark Sharpe", benchmarkMetrics.sharpe.toFixed(2)],
+          ["Max Drawdown", fmtPct(metrics.maxDrawdown)],
+          ["Win Rate", fmtPct(metrics.winRate)],
+          ["Final Equity", fmtMoney(metrics.finalEquity)],
+        ];
+        statsEl.innerHTML = cards.map(([k, v]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v}</div></div>`).join("");
+      }
+
+      function renderTrades(trades) {
+        tradesEl.innerHTML = trades.slice(-20).reverse().map(t => `
+          <tr>
+            <td>${t.entryDate}</td>
+            <td>${t.entryPrice.toFixed(2)}</td>
+            <td>${t.exitDate}</td>
+            <td>${t.exitPrice.toFixed(2)}</td>
+            <td>${t.exitType}</td>
+            <td class="${t.pnl >= 0 ? "good" : "bad"}">${fmtPct(t.pnl)}</td>
+          </tr>
+        `).join("");
+      }
+
+      function renderChart(strategyValues, benchmarkValues) {
+        const canvas = document.getElementById("equityChart");
+        const ctx = canvas.getContext("2d");
+        const w = canvas.width;
+        const h = canvas.height;
+
+        ctx.clearRect(0, 0, w, h);
+        ctx.fillStyle = "#0b122a";
+        ctx.fillRect(0, 0, w, h);
+
+        const all = strategyValues.concat(benchmarkValues);
+        const min = Math.min(...all);
+        const max = Math.max(...all);
+        const pad = 20;
+
+        ctx.strokeStyle = "#233569";
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 4; i++) {
+          const y = pad + (i * (h - 2 * pad)) / 3;
+          ctx.beginPath(); ctx.moveTo(pad, y); ctx.lineTo(w - pad, y); ctx.stroke();
+        }
+
+        const drawSeries = (values, color) => {
+          ctx.strokeStyle = color;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          values.forEach((v, i) => {
+            const x = pad + (i * (w - 2 * pad)) / Math.max(values.length - 1, 1);
+            const y = h - pad - ((v - min) / Math.max(max - min, 1e-9)) * (h - 2 * pad);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.stroke();
+        };
+
+        drawSeries(benchmarkValues, "#f59e0b");
+        drawSeries(strategyValues, "#66d9ef");
+      }
+
+      function downloadCsv(filename, rows) {
+        if (!rows.length) return;
+        const headers = Object.keys(rows[0]);
+        const escapeCell = (v) => {
+          const s = String(v ?? "");
+          return s.includes(",") || s.includes("\n") ? `"${s.replaceAll('"', '""')}"` : s;
+        };
+        const lines = [headers.join(",")].concat(rows.map(r => headers.map(h => escapeCell(r[h])).join(",")));
+        const blob = new Blob([lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
+      exportTradesBtn.addEventListener("click", () => {
+        if (!lastResult) return;
+        downloadCsv("trades.csv", lastResult.trades);
+      });
+
+      exportEquityBtn.addEventListener("click", () => {
+        if (!lastResult) return;
+        downloadCsv("equity_curve.csv", lastResult.equityRows);
+      });
+
+      document.getElementById("runBtn").addEventListener("click", async () => {
+        const symbol = document.getElementById("symbol").value;
+        const start = startInput.value;
+        const end = endInput.value;
+        const strategy = document.getElementById("strategyType").value;
+        const fast = Number(document.getElementById("fast").value);
+        const slow = Number(document.getElementById("slow").value);
+        const initialCapital = Number(document.getElementById("initialCapital").value);
+        const feeBps = Number(document.getElementById("feeBps").value);
+        const slippageBps = Number(document.getElementById("slippageBps").value);
+        const stopLossPct = Number(document.getElementById("stopLossPct").value);
+        const takeProfitPct = Number(document.getElementById("takeProfitPct").value);
+
+        statusEl.textContent = "Fetching historical prices...";
+        try {
+          const data = await fetchHistory(symbol, start, end);
+          statusEl.textContent = `Loaded ${data.length} bars for ${symbol.toUpperCase()}. Running strategy...`;
+          const result = runBacktest(
+            data,
+            strategy,
+            fast,
+            slow,
+            initialCapital,
+            feeBps,
+            slippageBps,
+            stopLossPct,
+            takeProfitPct
+          );
+          renderStats(result.metrics, result.benchmarkMetrics, result.outperformance);
+          renderTrades(result.trades);
+          renderChart(result.equity, result.benchmarkEquity);
+          lastResult = result;
+          exportTradesBtn.disabled = false;
+          exportEquityBtn.disabled = false;
+          statusEl.textContent = `Done. Last bar: ${data[data.length - 1].date}`;
+        } catch (err) {
+          statusEl.textContent = `Error: ${err.message}`;
+        }
+      });
+    </script>
   </body>
 </html>
-  </body>
-      </style></title>
-  </head>
